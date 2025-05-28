@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\DTOs\Cart\AddProductDTO;
 use App\DTOs\Cart\UpdateProductDTO;
+use App\Models\Cart;
 use App\Models\CartProduct;
 
 class CartProductService
@@ -66,5 +67,14 @@ class CartProductService
     public function deleteProduct(CartProduct $cartProduct): bool
     {
         return $cartProduct->delete();
+    }
+
+    /**
+     * @param Cart $cart
+     * @return bool
+     */
+    public function deleteAllProducts(Cart $cart): bool
+    {
+        return $cart->cartProducts()->delete();
     }
 }

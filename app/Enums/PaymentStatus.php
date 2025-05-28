@@ -2,11 +2,13 @@
 
 namespace App\Enums;
 
-enum CartStatus: int
+enum PaymentStatus: int
 {
-    case ACTIVE = 1;
-    case LOCKED = 2;
-    case COMPLETED = 3;
+    case PENDING = 1;
+    case PAID = 2;
+    case FAILED = 3;
+    case CANCELLED = 4;
+    case CASH_ON_DELIVERY = 5;
 
     /**
      * @return array

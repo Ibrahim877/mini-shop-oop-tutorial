@@ -9,11 +9,16 @@ class CartService
 {
 
     /**
+     * @param bool $withProducts
      * @return Cart
      */
-    public function getActiveCart(): Cart
+    public function getActiveCart(bool $withProducts = false): Cart
     {
-        $cart = auth()->user()->carts()->where('status', CartStatus::ACTIVE->value)->first();
+        $query = auth()->user()->carts()->where('status', CartStatus::ACTIVE->value);
+
+        $cart = $withProducts
+            ? $query->with('cartProducts.product')->first()
+            : $query->first();
 
         return $cart ?? $this->createCart();
     }

@@ -84,4 +84,33 @@ class CartController extends Controller
 
         return $this->response();
     }
+
+    /**
+     * @return JsonResponse
+     */
+    public function showCart(): JsonResponse
+    {
+        $cart = $this->service->getActiveCart(true);
+        return response()->json([
+            'cart' => $cart
+        ]);
+    }
+
+    /**
+     * @return JsonResponse
+     */
+    public function clearCart(): JsonResponse
+    {
+        try {
+            $cart = $this->service->getActiveCart();
+            DB::transaction(function () use ($cart) {
+                $this->productService->deleteAllProducts($cart);
+                $this->success('Səbət təmizləndi');
+            });
+        } catch (\Exception $e) {
+            $this->error($e->getMessage());
+        }
+
+        return $this->response();
+    }
 }

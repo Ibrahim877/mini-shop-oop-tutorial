@@ -2,16 +2,15 @@
 
 namespace App\Enums;
 
-enum CartStatus: int
+enum PaymentMethod: int
 {
-    case ACTIVE = 1;
-    case LOCKED = 2;
-    case COMPLETED = 3;
+    case CARD = 1;
+    case CASH_ON_DELIVERY = 2;
 
     /**
      * @return array
      */
-    public static function getStatuses(): array
+    public static function getMethods(): array
     {
         return array_column(self::cases(), 'value');
     }
