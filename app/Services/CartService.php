@@ -2,10 +2,12 @@
 
 namespace App\Services;
 
+use App\Contracts\CartInterface;
 use app\Enums\CartStatus;
 use App\Models\Cart;
+use Illuminate\Support\Facades\DB;
 
-class CartService
+class CartService implements CartInterface
 {
 
     /**
@@ -14,7 +16,7 @@ class CartService
      */
     public function getActiveCart(bool $withProducts = false): Cart
     {
-        $query = auth()->user()->carts()->where('status', CartStatus::ACTIVE->value);
+        $query = auth()->user()->cart()->where('status', CartStatus::ACTIVE->value);
 
         $cart = $withProducts
             ? $query->with('cartProducts.product')->first()
@@ -34,5 +36,18 @@ class CartService
         $cart->status = CartStatus::ACTIVE->value;
         $cart->save();
         return $cart;
+    }
+
+    /**
+     * @param int $cartId
+     * @return int
+     */
+
+    public function getTotalAmount(int $cartId): int
+    {
+        return (float)DB::table('cart_products')
+            ->where('cart_id', $cartId)
+            ->select(DB::raw('SUM(price * quantity) as total'))
+            ->value('total');
     }
 }

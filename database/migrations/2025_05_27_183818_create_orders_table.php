@@ -21,7 +21,6 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->unsignedBigInteger('tracking_number')->nullable();
-            $table->unsignedBigInteger('transaction_id')->nullable();
             $table->enum('status', $orderStatuses)->default(OrderStatus::PENDING->value);
             $table->enum('payment_method', $paymentMethods)->default(PaymentMethod::CARD->value);
             $table->enum('payment_status', $paymentStatuses)->default(PaymentStatus::PENDING->value);

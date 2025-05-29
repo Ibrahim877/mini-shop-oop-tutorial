@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DTOs\Cart;
+namespace App\DTOs\Carts;
 
 use App\Models\CartProduct;
 use Illuminate\Http\Request;

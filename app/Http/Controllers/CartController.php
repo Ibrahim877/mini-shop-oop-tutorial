@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\DTOs\Cart\AddProductDTO;
-use App\DTOs\Cart\UpdateProductDTO;
+use App\Contracts\CartInterface;
+use App\Contracts\CartProductInterface;
+use App\DTOs\Carts\AddProductDTO;
+use App\DTOs\Carts\UpdateProductDTO;
 use App\Http\Requests\Cart\AddProductRequest;
 use App\Http\Requests\Cart\DeleteProductRequest;
 use App\Http\Requests\Cart\UpdateProductRequest;
 use App\Models\CartProduct;
-use App\Services\CartProductService;
-use App\Services\CartService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -17,8 +17,8 @@ use Illuminate\Support\Facades\DB;
 class CartController extends Controller
 {
     public function __construct(
-        protected CartService        $service,
-        protected CartProductService $productService,
+        protected CartInterface        $service,
+        protected CartProductInterface $productService,
     )
     {
         parent::__construct();

@@ -2,12 +2,13 @@
 
 namespace App\Services;
 
-use App\DTOs\Cart\AddProductDTO;
-use App\DTOs\Cart\UpdateProductDTO;
+use App\Contracts\CartProductInterface;
+use App\DTOs\Carts\AddProductDTO;
+use App\DTOs\Carts\UpdateProductDTO;
 use App\Models\Cart;
 use App\Models\CartProduct;
 
-class CartProductService
+class CartProductService implements CartProductInterface
 {
     /**
      * @param AddProductDTO $data

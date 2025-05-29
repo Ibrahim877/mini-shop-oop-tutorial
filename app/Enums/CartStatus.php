@@ -6,7 +6,6 @@ enum CartStatus: int
 {
     case ACTIVE = 1;
     case LOCKED = 2;
-    case COMPLETED = 3;
 
     /**
      * @return array

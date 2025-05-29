@@ -3,8 +3,8 @@
 namespace App\Services;
 
 use App\Contracts\ProductInterface;
-use App\DTOs\Product\StoreDTO;
-use App\DTOs\Product\UpdateDTO;
+use App\DTOs\Products\StoreDTO;
+use App\DTOs\Products\UpdateDTO;
 use App\Models\Product;
 use Illuminate\Pagination\LengthAwarePaginator;
 
