@@ -20,7 +20,7 @@ class CanCreateOrderRule implements ValidationRule
             $fail('Səbət tapılmadı');
         } elseif ($cart->status != CartStatus::ACTIVE->value) {
             $fail('Səbət aktiv deyil. Sifariş üçün kilidlənib. Yenidən sifariş istəyi yaradıla bilməz. Cari sifarişi tamamlayın');
-        } elseif ($cart->products()->count()) {
+        } elseif ($cart->products()->count() == 0) {
             $fail('Səbətdə məhsul yoxdur');
         }
     }

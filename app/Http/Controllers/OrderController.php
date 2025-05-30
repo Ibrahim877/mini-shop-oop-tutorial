@@ -20,6 +20,7 @@ class OrderController extends Controller
     public function __construct(
         protected OrderInterface        $service,
         protected OrderProductInterface $productService,
+        protected CartService           $cartService,
         protected PaymentInterface      $paymentService,
     )
     {
@@ -34,17 +35,25 @@ class OrderController extends Controller
     public function store(StoreRequest $request): JsonResponse
     {
         try {
-            $cartService = new CartService();
-            $cart = $cartService->getActiveCart();
-            $createOrderDTO = CreateOrderDTO::fromRequest($request, $cart, $cartService->getTotalAmount($cart->id));
-            DB::transaction(function () use ($createOrderDTO, $cart, $request) {
+            $cart = $this->cartService->getActiveCart();
+            $createOrderDTO = CreateOrderDTO::fromRequest($request, $cart, $this->cartService->getTotalAmount($cart->id));
+            $orderData = DB::transaction(function () use ($createOrderDTO, $cart, $request) {
                 $order = $this->service->createOrder($createOrderDTO);
+                $responseData = [
+                    'order' => $order,
+                    'is_card' => false
+                ];
                 $this->productService->createOrderProducts($order, $cart);
                 if ($request->paymentMethod == PaymentMethod::CARD->value) {
                     $createPaymentDTO = CreatePaymentDTO::fromRequest($request->payment_gateway_id, $order);
                     $paymentIntent = $this->paymentService->createPayment($createPaymentDTO);
+                    $responseData['is_card'] = true;
+                    $responseData['payment_intent'] = $paymentIntent;
                 }
+                return $responseData;
             });
+            $this->success(true);
+            $this->res->data = $orderData;
         } catch (\Exception $e) {
             $this->error($e->getMessage());
         }

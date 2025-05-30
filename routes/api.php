@@ -7,6 +7,7 @@ use App\Http\Controllers\ProductController;
 
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\TestBankController;
 
 
 Route::get('/user', function (Request $request) {
