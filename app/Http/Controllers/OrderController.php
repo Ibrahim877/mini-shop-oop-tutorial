@@ -8,6 +8,8 @@ use App\Contracts\PaymentInterface;
 use App\DTOs\Orders\CreateOrderDTO;
 use App\DTOs\Payments\CreatePaymentDTO;
 use App\Enums\PaymentMethod;
+use App\Http\Requests\Orders\CheckPaymentRequest;
+use App\Http\Requests\Orders\PaymentResultRequest;
 use App\Http\Requests\Orders\StoreRequest;
 use App\Services\CartService;
 use Illuminate\Http\JsonResponse;
@@ -60,4 +62,24 @@ class OrderController extends Controller
 
         return $this->response();
     }
+
+    /**
+     * @param PaymentResultRequest $request
+     * @return JsonResponse
+     */
+    public function paymentResult(PaymentResultRequest $request): JsonResponse
+    {
+        try {
+
+        } catch (\Exception $e) {
+            $this->error($e->getMessage());
+        }
+
+        return $this->response();
+    }
+
+//    public function checkPayment(CheckPaymentRequest $request): JsonResponse
+//    {
+//
+//    }
 }
